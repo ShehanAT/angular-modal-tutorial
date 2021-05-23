@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { ProjectsModalComponent } from './projects-modal/projects-modal.component';
 
 @Component({
@@ -10,16 +10,25 @@ import { ProjectsModalComponent } from './projects-modal/projects-modal.componen
 })
 
 export class AppComponent {
+  dialogConfig = new MatDialogConfig();
+  modalDialog: MatDialogRef<ProjectsModalComponent, any> | undefined;
   constructor(public matDialog: MatDialog) { }
 
+  ngAfterViewInit(): void {
+    document.onclick = (args: any) : void => {
+          if(args.target.tagName === 'BODY') {
+              this.modalDialog?.close()
+          }
+      }
+  }
+
   openModal() {
-    const dialogConfig = new MatDialogConfig();
+    
     // The user can't close the dialog by clicking outside its body
-    dialogConfig.disableClose = true;
-    dialogConfig.id = "modal-component";
-    dialogConfig.height = "350px";
-    dialogConfig.width = "600px";
+    this.dialogConfig.id = "projects-modal-component";
+    this.dialogConfig.height = "350px";
+    this.dialogConfig.width = "600px";
     // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(ProjectsModalComponent, dialogConfig);
+    this.modalDialog = this.matDialog.open(ProjectsModalComponent, this.dialogConfig);
   }
 }
