@@ -23,12 +23,9 @@ export class AppComponent {
   }
 
   openModal() {
-    
-    // The user can't close the dialog by clicking outside its body
     this.dialogConfig.id = "projects-modal-component";
-    this.dialogConfig.height = "350px";
-    this.dialogConfig.width = "600px";
-    // https://material.angular.io/components/dialog/overview
+    this.dialogConfig.height = "500px";
+    this.dialogConfig.width = "650px";
     this.modalDialog = this.matDialog.open(ProjectsModalComponent, this.dialogConfig);
   }
 }
